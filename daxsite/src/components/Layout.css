@@ -1,3 +1,4 @@
+
 :root {
   --primary-bg-color: #f0f2f5;
   --secondary-bg-color: #4267b2;
@@ -5,14 +6,24 @@
   --font-color: #1c1e21;
 }
 
-body {
-  background-color: var(--primary-bg-color);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  color: var(--font-color);
+html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
+  background-color: var(--primary-bg-color);
+  color: var(--font-color);
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+}
 nav {
   background-color: var(--secondary-bg-color);
   padding: 1rem;
@@ -28,14 +39,12 @@ ul {
 }
 
 li {
-  color: white;
   margin: 0 1rem;
   cursor: pointer;
   position: relative;
 }
 
 li a {
-  color: white;
   text-decoration: none;
 }
 
@@ -43,10 +52,8 @@ li a {
 li:hover .delete-icon {
   display: block;
 }
-
-
-
 a {
   text-decoration: none;
   color: inherit;
 }
+

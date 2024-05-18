@@ -1,0 +1,44 @@
+header {
+    background-color: #1e90ff;
+    color: var(--font-color);
+    padding: 10px 0;
+    text-align: center;
+  }
+  
+  nav a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  .app-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--primary-bg-color); /* Optional: match the site's background color */
+  }
+  
+  .app-logo {
+    height: 50px; /* Adjust this value to resize the logo */
+    margin-right: 20px; /* Optional: add some space between the logo and the rest of the header content */
+  }
+  
+  .app-title {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .app-title h1 {
+    margin: 0;
+    font-size: 1.5rem; /* Adjust this value for the title size */
+  }
+  
+  .app-title p {
+    margin: 0;
+    font-size: 1rem; /* Adjust this value for the slogan size */
+    color: #555; /* Optional: change the color of the slogan */
+  }
