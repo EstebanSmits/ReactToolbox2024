@@ -1,0 +1,52 @@
+:root {
+  --primary-bg-color: #f0f2f5;
+  --secondary-bg-color: #4267b2;
+  --hover-bg-color: #365899;
+  --font-color: #1c1e21;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: var(--font-color);
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  background-color: var(--secondary-bg-color);
+  padding: 1rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+}
+
+li {
+  color: white;
+  margin: 0 1rem;
+  cursor: pointer;
+  position: relative;
+}
+
+li a {
+  color: white;
+  text-decoration: none;
+}
+
+
+li:hover .delete-icon {
+  display: block;
+}
+
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

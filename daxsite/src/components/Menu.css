@@ -1,0 +1,21 @@
+  
+  .delete-icon {
+    color: red;
+    position: absolute;
+    top: 0;
+    right: -15px;
+    cursor: pointer;
+    display: none;
+  }
+  
+  li:hover .delete-icon {
+    display: block;
+  }
+  
+  .external-link-icon {
+    margin-left: 5px;
+    font-size: 0.8rem;
+  }
+  
+  
+  
