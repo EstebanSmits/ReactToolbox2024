@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
+import useStateRef from 'react-usestateref';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
-const Game = () => {
+const Game = ({wsUrl}) => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [player, setPlayer] = useState(null);
   const [gameId, setGameId] = useState(null);
   const [isWsOpen, setIsWsOpen] = useState(false); // WebSocket connection state
+  var [wasDisconnected, setWasDisconnected,disconnectRef] = useStateRef(false); // Track disconnection status
   const ws = useRef(null);
   const location = useLocation();
   const reconnectInterval = useRef(null);
@@ -18,16 +20,24 @@ const Game = () => {
       }
     }
 
-    ws.current = new WebSocket('ws://localhost:3001');
+    ws.current = new WebSocket(wsUrl);
 
     ws.current.onopen = () => {
+      console.log('WebSocket connected');
       setIsWsOpen(true);
-      clearInterval(reconnectInterval.current);
+      if (reconnectInterval.current) {
+        clearInterval(reconnectInterval.current);
+        reconnectInterval.current = null;
+      }
     };
 
+    
     ws.current.onclose = () => {
+      console.log('WebSocket disconnected');
       setIsWsOpen(false);
-      reconnect();
+       if (!reconnectInterval.current) {
+        reconnect();
+      }
     };
 
     ws.current.onmessage = (event) => {
@@ -54,21 +64,26 @@ const Game = () => {
   };
 
   const reconnect = () => {
-    if (!reconnectInterval.current) {
-      reconnectInterval.current = setInterval(() => {
-        if (ws.current.readyState !== WebSocket.OPEN) {
-          connectWebSocket();
-        } else {
-          clearInterval(reconnectInterval.current);
-          reconnectInterval.current = null;
+    reconnectInterval.current = setInterval(() => {
+      if (!isWsOpen) {
+        setWasDisconnected(true);
+        connectWebSocket();
+        if (disconnectRef.current) {
+          setWasDisconnected(false);
+          toast.success('WebSocket back up and running ! 🚀🌙');
         }
-      }, 5000);
-    }
+        
+      } else {
+        clearInterval(reconnectInterval.current);
+        reconnectInterval.current = null;
+      }
+      
+    }, 5000);
   };
 
+   
   useEffect(() => {
     connectWebSocket();
-
     const params = new URLSearchParams(location.search);
     const gameIdFromUrl = params.get('gameId');
     if (gameIdFromUrl) {
@@ -113,7 +128,7 @@ const Game = () => {
 
   return (
     <div>
-      {!isWsOpen && <div className="alert alert-danger">WebSocket is down. Please try again later.</div>}
+      { !isWsOpen && <div className="alert alert-danger">WebSocket is down. Please try again later.</div>}
       <div>
         {player ? (
           <div>Player: {player}</div>

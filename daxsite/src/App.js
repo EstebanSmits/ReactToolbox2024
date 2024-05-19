@@ -13,7 +13,8 @@ import Layout from './components/Layout';
 
 const App = () => {
   const [menuItems, setMenuItems] = useState([]);
-
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const wsUrl = process.env.REACT_APP_WS_URL;
   useEffect(() => {
     const fetchMenuItems = async () => {
       const items = await getItems();
@@ -40,9 +41,9 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="calculator" element={<Calculator />} />
           <Route path="Tic-Tac-Toe" element={<TicTacToe />} />
-          <Route path="GameOn" element={<Game />} />
-          <Route path="privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="terms-of-service" element={<TermsOfService />} />
+          <Route path="GameOn" element={<Game wsUrl={wsUrl} />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy apiUrl={apiUrl} />} />
+          <Route path="terms-of-service" element={<TermsOfService apiUrl={apiUrl} />} />
           <Route path="add-menu-item" element={<AddMenuItem setMenuItems={setMenuItems} />} />
         </Route>
       </Routes>

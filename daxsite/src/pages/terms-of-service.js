@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const TermsOfService = () => {
+const TermsOfService = ({apiUrl}) => {
+  const [lastModified, setLastModified] = useState('');
+
+  useEffect(() => {
+    fetch('${apiUrl}/last-modified?file=src/pages/TermsOfService.js')
+      .then((response) => response.json())
+      .then((data) => {
+        setLastModified(new Date(data.lastModified).toLocaleDateString());
+      })
+      .catch((error) => console.error('Error fetching last modified date:', error));
+  }, []);
+
+
   return (
       <div className="container">
         <h1>Terms of Service</h1>
-        <p>Last updated: [Date]</p>
+        <p>Last updated: {lastModified}</p>
 
         <h2>Acceptance of Terms</h2>
         <p>By accessing and using [Your Game Name] (the "Game"), you accept and agree to be bound by the terms and provision of this agreement. In addition, when using this Game's services, you shall be subject to any posted guidelines or rules applicable to such services.</p>
@@ -23,5 +35,4 @@ const TermsOfService = () => {
       </div>
   );
 };
-
 export default TermsOfService;

@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const PrivacyPolicy = () => {
+const PrivacyPolicy = ({apiUrl}) => {
+  const [lastModified, setLastModified] = useState('');
+
+  useEffect(() => {
+    fetch('${apiUrl}/last-modified?file=src/pages/TermsOfService.js')
+      .then((response) => response.json())
+      .then((data) => {
+        setLastModified(new Date(data.lastModified).toLocaleDateString());
+      })
+      .catch((error) => console.error('Error fetching last modified date:', error));
+  }, []);
+
   return (
-
       <div className="container">
         <h1>Privacy Policy</h1>
-        <p>Last updated: [Date]</p>
+        <p>Last updated:  {lastModified}</p>
 
         <h2>Introduction</h2>
         <p>Welcome to [Your Game Name]. We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this privacy notice or our practices with regard to your personal information, please contact us at [Your Contact Information].</p>

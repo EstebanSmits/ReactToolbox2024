@@ -5,7 +5,7 @@ import Footer from './Footer';
 import Menu from './Menu'; // Import the Menu component
 import './Layout.css';
 
-const Layout = ({ menuItems, setMenuItems }) => {
+const Layout = ({ menuItems, setMenuItems,apiUrl }) => {
   return (
     <div>
       <Header />

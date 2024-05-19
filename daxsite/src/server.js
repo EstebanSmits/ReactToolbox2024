@@ -2,12 +2,25 @@ const express = require('express');
 const { WebSocketServer } = require('ws');
 const http = require('http');
 const { v4: uuidv4 } = require('uuid');
+
 const app = express();
+const fs = require('fs');
+const path = require('path');
+
+
 const server = http.createServer(app);
-const wss = new WebSocketServer({ server });
+app.get('/api/last-modified', (req, res) => {
+  const filePath = path.join(__dirname, req.query.file);
+  fs.stat(filePath, (err, stats) => {
+    if (err) {
+      return res.status(500).json({ error: 'File not found' });
+    }
+    res.json({ lastModified: stats.mtime });
+  });
+});
 
 const games = {};
-
+const wss = new WebSocketServer({ server });
 wss.on('connection', (ws) => {
   let gameId, playerId;
 
@@ -39,7 +52,6 @@ wss.on('connection', (ws) => {
       }
     }
   });
-
   ws.on('close', () => {
     if (gameId && games[gameId]) {
       delete games[gameId];

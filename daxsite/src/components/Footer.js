@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
   return (
     <footer>
-      <p>&copy; {new Date().getFullYear()} Your Game Name. All rights reserved.</p>
       <nav>
         <div>
         <Link to="/">Home</Link>
@@ -13,6 +12,7 @@ const Footer = () => {
         <Link to="/terms-of-service">Terms of Service</Link>
         </div>
       </nav>  
+      <p>&copy; {new Date().getFullYear()} Your Game Name. All rights reserved.</p>
     </footer>
   );
 };
