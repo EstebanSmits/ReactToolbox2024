@@ -10,6 +10,8 @@ import PrivacyPolicy from './pages/privacy-policy';
 import TermsOfService from './pages/terms-of-service';
 import { getItems } from './utils/db';
 import Layout from './components/Layout';
+import GoogleLoginPage from './components/GoogleLoginPage';
+import { UserProvider } from './components/UserContext';
 
 const App = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -24,11 +26,12 @@ const App = () => {
   }, []);
 
   return (
+    <UserProvider>
     <Router>
       <ToastContainer
         position="top-center"
         autoClose={1500}
-        hideProgressBar={false}
+        hideProgressBar={false}m
         newestOnTop={false}
         closeOnClick
         rtl={false}
@@ -42,12 +45,14 @@ const App = () => {
           <Route path="calculator" element={<Calculator />} />
           <Route path="Tic-Tac-Toe" element={<TicTacToe />} />
           <Route path="GameOn" element={<Game wsUrl={wsUrl} />} />
+          <Route path="GoogleLoginPage" Component={GoogleLoginPage} />
           <Route path="privacy-policy" element={<PrivacyPolicy apiUrl={apiUrl} />} />
-          <Route path="terms-of-service" element={<TermsOfService apiUrl={apiUrl} />} />
+            <Route path="terms-of-service" element={<TermsOfService apiUrl={apiUrl} />} />
           <Route path="add-menu-item" element={<AddMenuItem setMenuItems={setMenuItems} />} />
         </Route>
       </Routes>
     </Router>
+    </UserProvider>
   );
 };
 

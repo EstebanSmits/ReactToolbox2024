@@ -7,7 +7,6 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 
-
 const server = http.createServer(app);
 app.get('/api/last-modified', (req, res) => {
   const filePath = path.join(__dirname, req.query.file);
@@ -21,6 +20,7 @@ app.get('/api/last-modified', (req, res) => {
 
 const games = {};
 const wss = new WebSocketServer({ server });
+
 wss.on('connection', (ws) => {
   let gameId, playerId;
 
@@ -29,16 +29,16 @@ wss.on('connection', (ws) => {
 
     if (data.type === 'create') {
       gameId = uuidv4();
-      playerId = 'player1';
-      games[gameId] = { players: { player1: ws, player2: null }, board: Array(9).fill(null) };
+      playerId = data.playerName;
+      games[gameId] = { players: { [playerId]: ws, player2: null }, board: Array(9).fill(null) };
       ws.send(JSON.stringify({ type: 'created', gameId, playerId }));
     } else if (data.type === 'join') {
       gameId = data.gameId;
       if (games[gameId] && !games[gameId].players.player2) {
-        playerId = 'player2';
+        playerId = data.playerName;
         games[gameId].players.player2 = ws;
         ws.send(JSON.stringify({ type: 'joined', gameId, playerId }));
-        games[gameId].players.player1.send(JSON.stringify({ type: 'player2Joined' }));
+        games[gameId].players[data.player1].send(JSON.stringify({ type: 'player2Joined' }));
       } else {
         ws.send(JSON.stringify({ type: 'error', message: 'Invalid game ID or game full' }));
       }
@@ -47,11 +47,11 @@ wss.on('connection', (ws) => {
       if (games[gameId] && games[gameId].board[index] === null) {
         games[gameId].board[index] = player;
         const update = JSON.stringify({ type: 'update', board: games[gameId].board });
-        games[gameId].players.player1.send(update);
-        games[gameId].players.player2.send(update);
+        Object.values(games[gameId].players).forEach(playerWs => playerWs && playerWs.send(update));
       }
     }
   });
+
   ws.on('close', () => {
     if (gameId && games[gameId]) {
       delete games[gameId];

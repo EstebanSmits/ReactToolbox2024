@@ -1,8 +1,8 @@
 {
     "version": "0.2.0",
     "configurations": [
-      {
-        "name": "Launch Chrome against localhost",
+            {
+        "name": "Launch Local Chrome",
         "type": "chrome",
         "request": "launch",
         "url": "http://localhost:3000",
@@ -12,6 +12,18 @@
         "skipFiles": ["node_modules/**"]
       },
       {
+        "name": "Attach to local Chrome",
+        "type": "chrome",
+        "request": "attach",
+        "url": "http://localhost:3000",
+        "webRoot": "${workspaceFolder}/src",
+        "sourceMaps": true,
+        "trace": true,
+        "port": 9222,
+        "skipFiles": ["node_modules/**"]
+      },
+
+      {
         "name": "Attach to Node.js",
         "type": "node",
         "request": "attach",
@@ -19,12 +31,7 @@
         "restart": true,
         "skipFiles": ["<node_internals>/**"]
       }
-    ],
-    "compounds": [
-      {
-        "name": "Debug Both",
-        "configurations": ["Launch Chrome against localhost", "Attach to Node.js"]
-      }
     ]
+  
   }
   

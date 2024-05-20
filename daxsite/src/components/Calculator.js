@@ -92,7 +92,7 @@ const Calculator = () => {
         <h3>History</h3>
         <ul>
           {history.map((item) => (
-            <li key={item.id} role="listitem">
+            <li key={item.id}>
               <strong>ID:</strong> {item.id} <br />
               <strong>Calculation:</strong> {item.expression}
             </li>

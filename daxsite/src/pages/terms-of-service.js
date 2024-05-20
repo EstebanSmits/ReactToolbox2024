@@ -19,7 +19,7 @@ const TermsOfService = ({apiUrl}) => {
         <p>Last updated: {lastModified}</p>
 
         <h2>Acceptance of Terms</h2>
-        <p>By accessing and using [Your Game Name] (the "Game"), you accept and agree to be bound by the terms and provision of this agreement. In addition, when using this Game's services, you shall be subject to any posted guidelines or rules applicable to such services.</p>
+        <p>By accessing and using  this site , you accept and agree to be bound by the terms and provision of this agreement. In addition, when using this Game's services, you shall be subject to any posted guidelines or rules applicable to such services.</p>
 
         <h2>Description of Service</h2>
         <p>[Your Game Name] provides users with access to a rich collection of resources, including but not limited to, online games, forums, and other interactive features (the "Service"). You understand and agree that the Service may include advertisements.</p>
@@ -31,7 +31,7 @@ const TermsOfService = ({apiUrl}) => {
         <p>We reserve the right to modify or discontinue, temporarily or permanently, the Service (or any part thereof) with or without notice at any time. You agree that we shall not be liable to you or to any third party for any modification, suspension, or discontinuance of the Service.</p>
 
         <h2>Contact Us</h2>
-        <p>If you have questions or comments about this notice, you may contact us at [Your Contact Information].</p>
+        <p>If you have questions or comments about this notice, you may contact us at our contact page.</p>
       </div>
   );
 };

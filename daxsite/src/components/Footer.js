@@ -12,7 +12,7 @@ const Footer = () => {
         <Link to="/terms-of-service">Terms of Service</Link>
         </div>
       </nav>  
-      <p>&copy; {new Date().getFullYear()} Your Game Name. All rights reserved.</p>
+      <p>&copy; {new Date().getFullYear()} React space. All rights reserved.</p>
     </footer>
   );
 };
