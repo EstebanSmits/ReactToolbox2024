@@ -1,0 +1,56 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: Build
+  displayName: 'Build React app and Node.js server'
+  steps:
+    # Checkout the code
+    - task: Checkout@1
+
+    # Set up Node.js environment
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '12.x'
+      displayName: 'Install Node.js'
+
+    # Build the React app
+    - script: |
+        cd frontend
+        npm install
+        npm run build
+      displayName: 'Build React app'
+
+    # Install dependencies for Node.js server
+    - script: |
+        npm install
+      displayName: 'Install server dependencies'
+
+    # Copy build artifacts to a staging directory
+    - task: CopyFiles@2
+      inputs:
+        contents: 'frontend/build/**'
+        targetFolder: '$(Build.ArtifactStagingDirectory)/frontend'
+      displayName: 'Copy React build artifacts'
+
+    - task: CopyFiles@2
+      inputs:
+        contents: 'server.js'
+        targetFolder: '$(Build.ArtifactStagingDirectory)/backend'
+      displayName: 'Copy server files'
+
+    - task: CopyFiles@2
+      inputs:
+        contents: 'package.json'
+        targetFolder: '$(Build.ArtifactStagingDirectory)/backend'
+      displayName: 'Copy server package.json'
+
+    # Publish build artifacts
+    - task: PublishBuildArtifacts@1
+      inputs:
+        artifactName: 'drop'
+        pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      displayName: 'Publish build artifacts'
